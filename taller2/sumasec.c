@@ -33,3 +33,7 @@ Hijo 49361 terminó con suma: 6
 Hijo 49362 terminó con suma: 14
 Hijo 49363 terminó con suma: 25
 */
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
