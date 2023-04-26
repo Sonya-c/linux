@@ -37,3 +37,29 @@ Hijo 49363 terminó con suma: 25
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
+
+int main(int argc, char *argv[]) {
+    int n = atoi(argv[1]);
+
+    for (int i = 0; i < n; i = i + 1) {
+        pid_t pid = fork();
+
+        if (pid == 0) {
+            int suma = 0;
+
+            for (int j = i; j < 2*(i + 1); j = j + 1) {
+                suma = suma + j;
+                printf("Proceso %d, secuencia %d\n", getpid(), j);
+            }
+
+            exit(suma);
+
+        } else {
+            printf("Listado de números impresos por proceso %d\n", pid);
+            int suma;
+            wait(&suma);
+            suma = suma / 255;
+            printf("Hijo %d terminó con suma: %d\n", pid, suma);
+        }
+    }
+}
