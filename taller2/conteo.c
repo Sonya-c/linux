@@ -3,11 +3,10 @@
 #include<sys/wait.h>
 #include<unistd.h>
 
-int main()
+int main(int argc, char *argv[])
 {
-	int n;
+	int n = atoi(argv[1]);
 	int status;
-	scanf("%d",&n);
 	pid_t hijo=fork();
 	if(hijo!=0){
 		printf("Proceso padre y PID %d\n",getpid());
