@@ -19,54 +19,46 @@ PADRE de PID = 48987, HIJO de PID = 48988 terminado, st = 8
 PADRE de PID = 48987, HIJO de PID = 48991 terminado, st = 8 
 La suma es 27
 */
-
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <time.h>    
 
-int suma(int n, int s) {
-    pid_t pid = fork();
-    
-    if (pid == 0) {
-        // Cada hijo debe mostrar en la terminal su pid y un número entero entre 0 y 9 generado aleatoriamente
-        // Este número debe ser pasado al padre
-        
-        // https://stackoverflow.com/questions/8623131/why-is-rand-not-so-random-after-fork
-        srand(time(NULL) ^ (getpid()<<16));
-
-        int num = (rand() % (10));
-
-        printf("Hijo: PID = %d, valor aleatorio calculado %d\n", getpid(), num);
-
-        exit(num);
-
-    } else if (pid > 0) {
-        
-        int num = -1;
-        wait(&num);
-        num = num / 255;
-
-        if (n > 0) {
-            s = suma(n - 1, s);
-        }
-        
-        if (num != -1) {
-            s = s + num;
-            printf("PADRE de PID = %d, HIJO de PID = %d terminado, st = %d\n", getpid(), pid, num);
-        }
-
-    } else {
-        printf("Error fork\n");
-    }
-
-    return s;
-}
 int main(int argc, char *argv[]) {
     int n = atoi(argv[1]);
-    int s = suma(n, 0);
+    int s = 0;
 
+    // https://stackoverflow.com/questions/8623131/why-is-rand-not-so-random-after-fork
+    
+
+    for (int i = 0; i < n; i = i + 1){
+        pid_t pid = fork();
+        
+        if (pid == 0) {
+            srand(time(NULL) ^ getpid());
+            // Cada hijo debe mostrar en la terminal su pid y un número entero entre 0 y 9 generado aleatoriamente
+            // Este número debe ser pasado al padre
+            
+            int num = (rand() % (10));
+
+            printf("Hijo: PID = %d, valor aleatorio calculado %d\n", getpid(), num);
+
+            exit(num);
+
+        } else if (pid > 0) {
+            int num;
+            wait(&num);
+            num = num / 255;
+            
+            s = s + num;
+            printf("PADRE de PID = %d, HIJO de PID = %d terminado, st = %d\n", getpid(), pid, num);
+            
+
+        } else {
+            printf("Error fork\n");
+        }
+    }
     printf("La suma es %d\n", s);
     return 0;
 }
