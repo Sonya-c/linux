@@ -163,7 +163,10 @@ Uso: conteo ini_cont fin_cont
 ~~~
 $ ./Padre 3 
 Uso: ./Padre vlr-inip, vlr-finp, fnc, arg1, [arg2]...
-Ejecución 9: Ejecuta al padre, pero no encuentra al proceso hijo (mal escrito)
+~~~
+
+### Ejecución 9: Ejecuta al padre, pero no encuentra al proceso hijo (mal escrito)
+~~~
 $ ./Padre 3 7 conte 6 12
 Va a ejecutar al padre 16083
 Conteo en el padre 3
