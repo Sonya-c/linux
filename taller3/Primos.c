@@ -20,5 +20,26 @@ int main(int argc, char *argv[]) {
         printf("Uso: primos lim-primos\n");
         return 1;
     }
+    int n = atoi(argv[1]);
+    int num = 2;
+    int count = 1;
+
+    while (count <= n) {
+        int div = 0; 
+
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0) {
+                div++;
+                break;
+            }
+        }
+
+        if (div == 0) {
+            printf("Primo %d es %d\n", count, num);
+            count++;
+        }
+        
+        num++;
+    }
     return 0;
 }
